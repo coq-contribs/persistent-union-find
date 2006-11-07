@@ -1,0 +1,10 @@
+Name: PersistentUnionFind
+Title: Persistent Union Find
+Author: Jean-Christophe Filliâtre
+Institution: LRI, Orsay
+Description: 
+  Correctness proof of the Ocaml implementation of a persistent union-find
+  data structure. See http://www.lri.fr/~filliatr/puf/ for more details.
+Keywords: program verification, union-find, persistent data structure, Tarjan
+
+
