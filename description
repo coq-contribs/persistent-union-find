@@ -6,5 +6,5 @@ Description:
   Correctness proof of the Ocaml implementation of a persistent union-find
   data structure. See http://www.lri.fr/~filliatr/puf/ for more details.
 Keywords: program verification, union-find, data structures, Tarjan
-URL: http://www.lri.fr/~filliatr/puf/
+Url: http://www.lri.fr/~filliatr/puf/
 Category: Computer Science/Decision Procedures and Certified Algorithms/Correctness proofs of algorithms
