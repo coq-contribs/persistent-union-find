@@ -5,6 +5,7 @@
 (** 1. Persistent arrays *)
 
 Set Implicit Arguments.
+Unset Standard Proposition Elimination Names.
 Require Export Wf_nat.
 Require Export ZArith.
 Open Scope Z_scope.
