@@ -937,7 +937,7 @@ Lemma union_lemma_1 :
   repr (upd f ry rx) a rx -> (repr f a rx \/ repr f a ry).
 Proof.
   intros.
-  induction H6; subst rx0.
+  induction H6.
   case_eq i ry.
   left; apply repr_zero; auto.
   apply repr_fixpoint with y; auto.
