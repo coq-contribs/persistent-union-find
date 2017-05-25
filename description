@@ -1,6 +1,6 @@
 Name: PersistentUnionFind
 Title: Persistent Union Find
-Author: Jean-Christophe Filli‚tre
+Author: Jean-Christophe Filli√¢tre
 Institution: LRI, Orsay
 Description: 
   Correctness proof of the Ocaml implementation of a persistent union-find
