@@ -45,19 +45,19 @@ Inductive data : Set :=
 Record mem : Set := { ref : PM.t data; arr : Z->Z }.
 
 Definition upd (f:Z->Z) (i:Z) (v:Z) := 
-  fun j => if Z_eq_dec j i then v else f j.
+  fun j => if Z.eq_dec j i then v else f j.
 Axiom upd_ext : forall f g:Z->Z, (forall i, f i = g i) -> f=g.
 
 Lemma upd_eq : forall f i j v, i=j -> upd f i v j = v.
 Proof.
-  intros; unfold upd; case (Z_eq_dec j i); auto.
+  intros; unfold upd; case (Z.eq_dec j i); auto.
   intro; absurd (i=j); auto.
 Qed.
 Ltac upd_eq := rewrite upd_eq; auto.
 
 Lemma upd_neq : forall f i j v, i<>j -> upd f i v j = f j.
 Proof.
-  intros; unfold upd; case (Z_eq_dec j i); auto.
+  intros; unfold upd; case (Z.eq_dec j i); auto.
   intro; absurd (i=j); auto.
 Qed.
 Ltac upd_neq := rewrite upd_neq; auto.
@@ -271,12 +271,12 @@ Proof.
   elim (pa_inversion h).
   (* Diff j v p' *)
   intros (p',(j,(v,(h1,h2)))).
-  case (Z_eq_dec i j); intro hij.
+  case (Z.eq_dec i j); intro hij.
   exists v; intros.
   inversion H0; rewrite H1 in h1.
   discriminate h1.
   injection h1; intros; subst.
-  unfold upd; case (Z_eq_dec j j); simpl; auto. 
+  unfold upd; case (Z.eq_dec j j); simpl; auto. 
   intros; absurd (j<>j); auto. 
   assert (hp': lt_dist (ref m) p' p).
   apply lt_dist_diff with j v; auto.
@@ -284,7 +284,7 @@ Proof.
   exists x; intuition.
   inversion H0; rewrite H1 in h1. discriminate h1.
   injection h1; intros; subst.
-  unfold upd; case (Z_eq_dec i j); intuition.
+  unfold upd; case (Z.eq_dec i j); intuition.
   (* Array *)
   intro; exists (arr m i); intros.
   inversion H0; auto.
@@ -347,7 +347,7 @@ Proof.
   unfold res in *|-*; subst p.
   rewrite H; discriminate.
   apply upd_ext; intro i0.
-  unfold upd; case (Z_eq_dec i0 i); simpl; intros; subst; auto.
+  unfold upd; case (Z.eq_dec i0 i); simpl; intros; subst; auto.
   set (res := PM.new (ref m)).
   apply pa_model_array_2.
   rewrite PM.find_add_neq.
@@ -589,7 +589,7 @@ Proof.
 Qed.
 
 Ltac case_eq x y :=
-  case (Z_eq_dec x y); intro; [subst x | idtac].
+  case (Z.eq_dec x y); intro; [subst x | idtac].
 
 Lemma path_compression :
   forall f, reprf f ->
@@ -600,7 +600,7 @@ Proof.
   unfold reprf; intros.
   destruct H.
   split; intros.
-  unfold upd; case (Z_eq_dec i x); intro.
+  unfold upd; case (Z.eq_dec i x); intro.
   apply repr_below_N with f x; auto.
   auto.
   destruct (H2 i H3) as [j hj].
@@ -638,7 +638,7 @@ Lemma path_compression_2 :
 Proof.
   intros; unfold same_reprs; split.
   induction 1.
-  case (Z_eq_dec i x); intro.
+  case (Z.eq_dec i x); intro.
   apply repr_zero; auto.
   upd_eq.
   assert (repr f i i). apply repr_zero; auto.
@@ -646,7 +646,7 @@ Proof.
   apply repr_zero; auto.
   upd_neq.
   generalize (IHrepr H4); intro h; clear IHrepr.
-  case (Z_eq_dec i x); intro.
+  case (Z.eq_dec i x); intro.
   assert (repr f i r0).
   apply repr_succ with j; auto.
   assert (r=r0).
@@ -700,7 +700,7 @@ Proof.
    (* let x0 = get m p x *) 
   destruct h.
   destruct (get m p H0 x).
-  case (Z_eq_dec x0 x); intro.
+  case (Z.eq_dec x0 x); intro.
   (* x0 = x *)
   subst x0; exists x; exists p; exists m; intuition.
   unfold uf_valid; intuition.
@@ -815,7 +815,7 @@ Proof.
   generalize (repr_fixpoint H1).
   intro; apply repr_zero; auto.
   upd_neq.
-  case (Z_eq_dec i r); intro.
+  case (Z.eq_dec i r); intro.
   subst i.
   apply repr_succ with rx; auto.
   upd_eq.
@@ -881,10 +881,10 @@ Lemma repr_x_inv_upd :
 Proof.
   induction 1.
   apply repr_zero.
-  unfold upd; case (Z_eq_dec i ry); auto.
-  case (Z_eq_dec i ry); auto.
+  unfold upd; case (Z.eq_dec i ry); auto.
+  case (Z.eq_dec i ry); auto.
   intro; subst i. 
-  case (Z_eq_dec r ry); auto.
+  case (Z.eq_dec r ry); auto.
   intro; subst; apply repr_zero; auto.
   upd_eq.
   intro; apply repr_succ with r; auto.
@@ -1100,7 +1100,7 @@ Proof.
   intros m p hpuf x y Ix Iy.
   elim (find hpuf Ix); intros rx (p0,(m0,(uf_m0_p0,hrx))).
   elim (find uf_m0_p0 Iy); intros ry (p1,(m1,(uf_m1_p1,hry))).
-  case (Z_eq_dec rx ry); intro.
+  case (Z.eq_dec rx ry); intro.
 
   (* rx = ry *)
   exists p1; exists p1; exists m1.
