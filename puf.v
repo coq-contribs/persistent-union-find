@@ -5,7 +5,6 @@
 (** 1. Persistent arrays *)
 
 Set Implicit Arguments.
-Unset Standard Proposition Elimination Names.
 Require Export Wf_nat.
 Require Export ZArith.
 Open Scope Z_scope.
@@ -291,7 +290,7 @@ Proof.
   inversion H0; auto.
   rewrite H1 in b; discriminate b.
 Defined.
-Implicit Arguments get [].
+Arguments get : clear implicits.
 
 (* ************************************************************
 let set t i v = match !t with
